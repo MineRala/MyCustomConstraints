@@ -324,22 +324,22 @@ public struct ConstraintAttributeValue {
     var constant: CGFloat
     var multiplier: CGFloat
 
-    init() {
+    public init() {
         self.constant = 0
         self.multiplier = 1
     }
 
-    init(constant: CGFloat) {
+    public init(constant: CGFloat) {
         self.constant = constant
         self.multiplier = 1
     }
 
-    init(multiplier: CGFloat) {
+    public init(multiplier: CGFloat) {
         self.constant = 0
         self.multiplier = multiplier
     }
 
-    init(constant: CGFloat, multiplier: CGFloat) {
+    public init(constant: CGFloat, multiplier: CGFloat) {
         self.constant = constant
         self.multiplier = multiplier
     }
