@@ -89,28 +89,38 @@ extension UIView {
     }
 
     // MARK: Sizing
-    /// Set static width to view
+    /// Set static width to view or multiplier to related view
     /// - Note: UITemporaryLayoutWidth is added when layoutIfNeeded is called before layoutSubviews
     @discardableResult
-    public func setWidth(_ widthConstant: CGFloat, shouldLayout: Bool = false) -> UIView {
+    public func setWidth(to: UIView? = nil, multiplierValue: ConstraintAttributeValue? = nil, widthConstant: CGFloat? = nil, shouldLayout: Bool = false) -> UIView {
         enableAutoLayoutIfNeeded()
-        NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: widthConstant)
-        ])
+        if let multiplierValue, let to {
+            let constraint = NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: to, attribute: .width, multiplier: multiplierValue.multiplier, constant: multiplierValue.constant)
+            NSLayoutConstraint.activate([constraint])
+        } else if let constantValue = widthConstant {
+            NSLayoutConstraint.activate([
+                widthAnchor.constraint(equalToConstant: constantValue)
+            ])
+        }
         if shouldLayout {
             layoutIfNeeded()
         }
         return self
     }
 
-    /// Set static height to view
+    /// Set static height to view or multiplier to related view
     /// - Note: UITemporaryLayoutHeight is added when layoutIfNeeded is called before layoutSubviews
     @discardableResult
-    public func setHeight(_ heightConstant: CGFloat, shouldLayout: Bool = false) -> UIView {
+    public func setHeight(to: UIView? = nil, multiplierValue: ConstraintAttributeValue? = nil, heightConstant: CGFloat? = nil, shouldLayout: Bool = false) -> UIView {
         enableAutoLayoutIfNeeded()
-        NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: heightConstant)
-        ])
+        if let multiplierValue, let to {
+            let constraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: to, attribute: .height, multiplier: multiplierValue.multiplier, constant: multiplierValue.constant)
+            NSLayoutConstraint.activate([constraint])
+        } else if let constantValue = heightConstant {
+            NSLayoutConstraint.activate([
+                heightAnchor.constraint(equalToConstant: constantValue)
+            ])
+        }
         if shouldLayout {
             layoutIfNeeded()
         }
